@@ -1,0 +1,218 @@
+*{
+	margin:0px;
+	padding:0px;
+}
+
+body{
+}
+
+a{
+	color:#3964C2;
+}
+
+#message, #header, #footer, .fixed, #pageNav{
+	clear:both;
+}
+
+#wrap{
+	background-color:#F3F3F3;
+	position:relative;
+}
+
+#message{
+	display:none;
+	font-size:80%;
+	background-color:#ffe66f;
+	height:25px;
+	line-height:25px;
+	padding:0px 10px;
+}
+#message a{
+	cursor:pointer;
+}
+#header{
+	height:38px;
+	background:url(/static/images/headerBackground.gif) repeat-x 0 0;
+}
+
+#title{
+	float:left;
+	font-family:"Trebuchet MS",helvetica,sans-serif;
+	font-size:170%;
+	padding:0 20px;
+	width:200px;
+}
+
+#title a{
+	text-decoration:none;
+}
+
+#navbar{
+	list-style:none;
+	float:left;
+}
+
+#navbar li{
+	display:block;
+	float:left;
+	background-color:#F3F4F5;
+	margin-right:10px;
+	border:1px solid #D8D9DD;
+	padding:3px 7px;
+	margin-top:10px;
+}
+
+#navbar li a{
+	color:#3964C2;
+	font-family:arial,sans-serif;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+#navbar #currentTab{
+	background:white;
+	border-bottom-color:white;
+}
+
+#search{
+	float:right;
+	margin:10px 10px 0 0;
+}
+
+#searchBox{
+	border:1px solid #CCCCCC;
+	width:160px;
+}
+
+#searchSubmit{
+}
+
+#main{
+	margin-right:200px;
+	background:#FFF url(/static/images/shadowspan.gif) repeat-y right 0;
+}
+
+#sidebar{
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:200px;
+}
+
+#imageList{
+	margin:0px 0px 5px 10px;
+	padding-top:5px;
+}
+
+#imageList li{
+	text-align:center;
+	display:block;
+	float:left;
+	width:140px;
+	height:140px;
+	margin:1px;
+	padding:5px;
+	border:1px solid #FFF;
+}
+
+#imageList li:hover {
+	background-color:#84c1ff;
+	border-color:#0080ff;
+}
+
+#imageList li img{
+	border:1px solid #ccc;
+}
+
+#pageNav{
+	border-top:1px solid #CCC;
+	font-size:80%;
+	margin:10px 20px 0px;
+	padding:15px;
+	text-align:right;
+}
+
+#footer{
+	border-top:1px solid #E6E6E6;
+	height:20px;
+	padding-top:5px;
+	text-align:center;
+	font-size:80%;
+	background-color:white;
+}
+
+#googleFriendConnect, #googleFriendComment{
+	width:200px;
+}
+
+h2{
+	color:#333;
+	border-bottom:1px solid #777;
+	padding-left:8px;
+	margin:5px 15px;
+}
+
+#metainfo, #detail{
+	color:#777777;
+	font-size:80%;
+	margin-left:25px;
+	margin-top:-5px;
+}	
+
+#metainfo ul, #randomPic ul, #detail ul{
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}
+
+#metainfo ul li{
+	float:left;
+}
+
+#mainPicture{
+	margin-left:25px;
+	padding:5px;
+	clear:both;
+	text-align:center
+}
+
+#detail, #randomPic{
+	color:black;
+	margin:5px 15px;
+	padding:5px 0px;
+	border-top:1px solid #777;
+}
+
+#randomPic li{
+	float:left;
+	margin-right:25px;
+}
+
+#randomPic li img{
+	border:0px;
+}
+
+#comment{
+width:100%px;border:1px solid #cccccc;padding:5px;
+border-top:1px solid #777;
+margin:5px 15px;
+}
+
+/*#mainPicture.small{
+/*        /*非IE的主流浏览器识别的垂直居中的方法*/
+/*        display: table-cell;
+/*        vertical-align:middle;
+/*
+/*        /* 针对IE的Hack */
+/*        *display: block;
+/*        *font-size: 262px;/*约为高度的0.873，200*0.873 约为175*/
+/*        *font-family:Arial;/*防止非utf-8引起的hack失效问题，如gbk编码*/
+/*
+/*        height:300px;
+/*}
+/*
+/*#mainPicture.small img {
+/*        /*设置图片垂直居中*/
+/*        vertical-align:middle;
+/*}
+/**/
