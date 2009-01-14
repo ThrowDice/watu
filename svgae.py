@@ -596,7 +596,7 @@ class Submit(webapp.RequestHandler):
                             img.put()    
                     session = friendfeed.FriendFeed('dwimages','mill872calks')
                     entry = session.publish_link(
-                                title=caption.encode('gbk'),
+                                title=caption.encode('utf-8','ignore'),
                                 link="http://images.kangye.org/imgdetail/%s" % img_key ,
                                 image_urls=[
                                     "http://imageserver%d.appspot.com/images/%s%s" % (rannum,img_key,ext_thumbnail),
