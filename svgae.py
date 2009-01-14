@@ -929,14 +929,14 @@ class Manage(webapp.RequestHandler):
         
 class TestApp(webapp.RequestHandler):
     def get(self):
-        q = Image.all()
-        #q.order("-date")
-        q.filter("server =", "images")
-        self.response.out.write(q.count())
-        results = q.fetch(100)
-        for img in results:
-            img.server="y44y"
-            img.put()
+#        q = Image.all()
+#        #q.order("-date")
+#        q.filter("server =", "images")
+#        self.response.out.write(q.count())
+#        results = q.fetch(100)
+#        for img in results:
+#            img.server="y44y"
+#            img.put()
         #img = Image.get("agR5NDR5cgwLEgVJbWFnZRjUFgw")
         #img.delete()
         self.response.out.write("good")
