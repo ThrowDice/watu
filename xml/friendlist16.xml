@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="CommunityLameGame" scrolling="true">
+    <Require feature="settitle"/>
+    <Require feature="dynamic-height"/>
+    <Require feature="views" />   
+    <Require feature="opensocial-0.7" />   
+  </ModulePrefs>
+  <Content type="html"><![CDATA[
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <script type="text/javascript">
+      
+      var impl = {
+        render: function(data) {
+          var viewer = data.getViewer();
+          var allPeople = data.getOwnerFriends().asArray() || [];
+          if(viewer) {
+            _gel('clickme').innerHTML = '<input type="button" value="Click Me" onclick="iAmLame(); return false;"/>';
+          } else {
+            _gel('clickme').innerHTML = '';
+          }
+          
+        
+          var html = "googlegogolegogole<br/>google"
+          _gel('highscores').innerHTML = html;
+          gadgets.window.adjustHeight();
+        }
+      }
+  
+        
+      function iAmLame() {
+        parent.window.close(); 
+        
+        /*try {
+        top.location.replace("ggg");
+        } catch (e) {
+        top.location = "ghs";
+        }*/
+        
+        
+      }
+  
+      SocialNorms.createSocialAppOnLoad(impl, 'OWNER', ['Score']);
+    </script>
+             
+    <div id="highscores" style="margin: 4px">
+    </div>
+    <div id="clickme" style="margin: 4px">
+      Loading.<blink>..</blink>
+    </div>
+  ]]>
+  </Content>
+</Module>

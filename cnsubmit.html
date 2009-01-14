@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>挖图网 - 分享网络上的图片并和你的朋友分享</title>
+<link rel="stylesheet" href="http://www.friendfeed.com/static/css/core.css?v=b849756d14f4eaebcfc4e5907211a485" type="text/css"/>
+
+<link rel="shortcut icon" href="http://www.kangye.org/favicon.ico" type="image/x-icon">
+
+
+
+<style type="text/css">html,
+body,
+#body {
+height: auto;
+}
+body {
+background: white;
+}
+#body {
+padding: 10px;
+}
+select {
+width: 16em;
+}
+div.field {
+margin-bottom: 8px;
+}
+div.thumbnails {
+white-space: nowrap;
+overflow: hidden;
+}
+td.button {
+padding-left: 4px;
+vertical-align: top;
+padding-top: 1px;
+}
+td.close {
+vertical-align: top;
+text-align: right;
+}
+div.comment {
+/*background: url("http://www.friendfeed.com/static/images/share-comment.png?v=3fc95130d3eb25223b86c47ea370a633") 1px 5px no-repeat;*/
+}
+div.title {
+/*background: url("http://www.friendfeed.com/static/images/icons/internal.png?v=e471e9afdf04ae568dcbddb5584fc6c0") 0px 3px no-repeat;*/
+}
+div.thumbnails img {
+border: 1px solid #ccc;
+padding: 1px;
+margin-bottom: 8px;
+margin-right: 8px;
+vertical-align: middle;
+}
+textarea.title,
+textarea.comment {
+width: 398px;
+}
+textarea.blur,
+input.blur {
+color: #aaa;
+}
+div.title,
+div.comment {
+padding-left: 22px;
+}
+textarea.title,
+textarea.comment {
+padding: 2px;
+height: 13pt;
+margin: 0;
+}
+textarea.title {
+color: #0000cc;
+text-decoration: underline;
+}
+textarea.comment {
+color: #737373;
+}
+textarea.title.blur,
+textarea.comment.blur {
+color: #aaa;
+text-decoration: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="body">
+<div style="margin-bottom:8px">
+<table style="width:100%">
+<tr>
+<td>分享图片</td>
+<td class="close"><a href="#" onclick="sendToParent('close'); return false"><img src="http://www.friendfeed.com/static/images/close-white.png?v=51fd078700f2c6d7ba3b743157150634" alt="Close" title="关闭" width="13" height="13"/></a></td>
+</tr>
+</table>
+</div>
+<div id="sharediv">
+<form action="/submit" method="post" target="_top" id="bookmarkletform">
+<div class="title field">图片<input name="olink" type="input" size="50" value="{{olink}}"></div>
+<div class="comment field">描述<input name="caption" type="input" size="50" value="{{caption}}"></div>
+<div class="comment field">分类
+<select name="category"> 
+<option value="美女">&nbsp;美女</option> 
+ 
+<option value="趣图">&nbsp;趣图</option> 
+  
+<option value="设计">&nbsp;设计</option> 
+
+<option value="IT">&nbsp;IT</option>
+ 
+<option value="饮食">&nbsp;饮食</option> 
+ 
+<option value="自然">&nbsp;自然</option> 
+ 
+<option value="科学">&nbsp;科学</option> 
+ 
+<option value="动物">&nbsp;动物</option> 
+ 
+<option value="广告">&nbsp;广告</option> 
+ 
+<option value="新闻图片">&nbsp;新闻</option> 
+ 
+<option value="历史照片">&nbsp;历史</option> 
+ 
+<option value="照片">&nbsp;照片</option> 
+ 
+<option value="图片">&nbsp;图片</option>
+ 
+</select> 
+
+</div>
+<div class="comment field"><input name="opagelink" type="hidden"value="{{opagelink}}"></div>
+<div class="comment field"><input name="opagetitle" type="hidden"value="{{opagetitle}}"></div>
+<div class="actions">
+<table style="width:100%">
+<tr>
+<td class="g">点击页面上的图片即可分享。</td>
+<td style="text-align:right; padding-left: 5px">
+<input type="submit" value="Post" style="font-weight:bold"/>
+<input type="hidden" name="parenturl"/>
+
+<input type="hidden" name="link" value=""/>
+<input type="hidden" name="next" value="http://friendfeed.com/"/>
+<input type="hidden" name="at" value="1953164912651023292_1228102638"/>
+
+</td>
+</tr>
+</table>
+</div>
+</form>
+</div>
+
+</div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+<script src="/js/core.en.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+//google.load("jquery", "1.2.6");
+var gLastHash = "";
+var gReshare = null;
+var gThumbnails = [];
+var kThumbHeight = 150;
+var kThumbWidth = 400;
+var kMaxThumbnails = 3;
+
+$(function() { 
+$("#bookmarkletform").submit(bookmarkletSubmit); 
+//checkHash(); 
+//setInterval(checkHash, 100); 
+}); 
+
+
+
+function sendToParent(msg) {
+
+var url = $('input[name=opagelink]').val().split('#')[0] + "#FFSHARE-" + msg;
+try {
+top.location.replace(url);
+} catch (e) {
+top.location = url;
+}
+}
+
+function bookmarkletSubmit(form) {
+var form = $("#bookmarkletform");
+var args = form.formToDict();
+var submit = $("input[type=submit]");
+submit.disable();
+//$.postJSON("/submit", args, function() {
+//submit.enable();
+//
+//sendToParent("close");
+//}, submit, true);
+$.post("/submit",args,function(){
+submit.enable();
+sendToParent("close");
+}
+);
+return false;
+}
+
+
+//]]>
+</script>
+
+</body>
+</html>

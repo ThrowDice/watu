@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+<ul id="imageList">
+{% for img in images %}
+	<li>
+	<a href="/imgdetail/{{img.key}}" style="background:url(http://{%firstof img.server "y44y" %}.appspot.com/thumbs/{{ img.key }}{{ img.ext_thumb }}) no-repeat center center;display:block;height:100%;width:100%" title="{{img.caption}}" alt="img.caption" ></a>
+	</li>
+{% endfor %}
+</ul>
+<div id="pageNav">
+	{% if before %}<a href="{{before}}">Previous</a>{% endif %}
+	{% if next %}<a href="{{next}}">Next</a>{% endif %}
+</div>
+{% endblock %}

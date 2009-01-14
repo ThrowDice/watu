@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="CommunityLameGame" scrolling="true">
+    <Require feature="settitle"/>
+    <Require feature="dynamic-height"/>
+    <Require feature="views" />   
+    <Require feature="opensocial-0.7" />   
+  </ModulePrefs>
+  <Content type="html"><![CDATA[
+    <style type="text/css">
+      .mytable td {padding: 4px;}
+      .mytable {border: 1px solid #004400;}
+    </style>
+     
+    <!-- Change to local path for testing -->
+    <script src="http://hosting.gmodules.com/ig/gadgets/file/103169497864651487485/SocialNorms.js"></script>
+    <script type="text/javascript">
+      gadgets.window.setTitle('Lame Game');
+      var impl = {
+        render: function(data) {
+          var viewer = data.getViewer();
+          var allPeople = data.getOwnerFriends().asArray() || [];
+          if(viewer) {
+            allPeople.push(viewer);
+            var viewerData = data.getDataFor(viewer.getId());
+            score = scoreOf(viewerData);
+            _gel('clickme').innerHTML = '<input type="button" value="Click Me" onclick="iAmLame(); return false;"/>';
+          } else {
+            _gel('clickme').innerHTML = '';
+          }
+          
+        
+          var leaders = allPeople.sort(function(friend1, friend2) {
+              return scoreOf(data.getDataFor(friend2)) - scoreOf(data.getDataFor(friend1));
+          });
+    
+          var html = '<table class="mytable">';
+          html += '<tr><td colspan="2"><b>High Scores / Most Obsessive</b></td></tr>';
+          for (var i = 0; i < leaders.length; i++) {
+            html += '<tr><td>' + leaders[i].getDisplayName() + '</td>';
+            html += '<td>' + scoreOf(data.getDataFor(leaders[i])) + '</td></tr>';
+          };
+          html += '</table>';
+          _gel('highscores').innerHTML = html;
+          gadgets.window.adjustHeight();
+        }
+      }
+  
+      function scoreOf(data) {
+        return data['Score'] ? Number(data['Score']) : 0;
+      }
+  
+      function iAmLame() {
+        
+        try {
+        top.location.replace("ggg");
+        } catch (e) {
+        top.location = "ghs";
+        }
+        
+        
+      }
+  
+      SocialNorms.createSocialAppOnLoad(impl, 'OWNER', ['Score']);
+    </script>
+             
+    <div id="highscores" style="margin: 4px">
+    </div>
+    <div id="clickme" style="margin: 4px">
+      Loading.<blink>..</blink>
+    </div>
+  ]]>
+  </Content>
+</Module>

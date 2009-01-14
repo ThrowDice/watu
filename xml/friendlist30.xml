@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="List Friends Example">
+    <Require feature="opensocial-0.8"/>
+    <Require feature="dynamic-height"/>
+  </ModulePrefs>
+  <Content type="html">
+  <![CDATA[
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <script type="text/javascript">
+      /**
+       * Request the OWNER and OWNER's friends.
+       */
+      function request() {
+        var idspec = opensocial.newIdSpec({ "userId" : "OWNER", "groupId" : "FRIENDS" });
+        var req = opensocial.newDataRequest();
+        req.add(req.newFetchPersonRequest(opensocial.IdSpec.PersonId.OWNER), "get_owner");
+        req.add(req.newFetchPeopleRequest(idspec), "get_friends");
+        req.send(response);
+      };
+
+      /**
+       * Parses the response and generates html to list the names of the owner and
+       * his or her friends.
+       *
+       * @param {Object} dataResponse Friend information that was requested.
+       */
+      function response(dataResponse) {
+        var owner = dataResponse.get('get_owner').getData();
+        var friends = dataResponse.get('get_friends').getData(); 
+        var html = 'Friends of ' + owner.getDisplayName();
+        html += ':<br><ul>';
+        friends.each(function(person) {
+          html += '<li>' + person.getDisplayName() + '</li>';
+        });
+        html += '</ul>';
+        document.getElementById('message').innerHTML = html;
+        gadgets.window.adjustHeight();
+      };
+      function iAmLame(){
+      document.getElementById('all').innerHTML = "";
+      gadgets.window.adjustHeight(1);
+      }
+
+      // Execute the request function when the application is finished loading.
+      gadgets.util.registerOnLoadHandler(request);
+
+    </script>
+    <div id="all">
+    <div id="message"> </div>
+    <input type="button" value="Click Me" onclick="iAmLame(); return false;"/></div>
+  ]]>
+  </Content>
+</Module>
+

@@ -1,0 +1,64 @@
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>{% block title %}WebImagesDiscovery - Discover Web Images and Share With Your Friends{% endblock %}</title>
+	<meta name="description" content="Discover Web Images and Share With Your Friends. It's a web application for you to share image you see on the web and you can give it a suitable title and then people can know image well. And it is a place to share images among friends. The website use Google Friend Connect.">
+	<link rel="shortcut icon" href="http://www.kangye.org/favicon.ico" type="image/x-icon">
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://feeds.feedburner.com/dwimages" />
+	<meta name="verify-v1" content="GWNZ9rQ6c4BXb8yNCJMuUJtoSvp9JU5DvjhDd7znoyU=" />
+	<meta name="msvalidate.01" content="BAB7A6E8C70F4D4E6453CF08DE698C93" />
+	<META name="y_key" content="fd32ea02c4ec514c">
+
+	<link rel="stylesheet" href="/static/style/core.css" type="text/css"/> 
+</head> 
+<body> 
+	<div id="message">
+		<p>
+			<span>Drag the Bookmarklet link to your bookmarks bar, then you can share images everywhere.</span>
+			<a id="neverShowThis">[Do not show this again]</a>
+		</p>
+	</div>
+
+	<div id="header">
+		<h1 id="title"><a href="/">WebImagesDiscovery</a></h1>
+		<ul id="navbar">
+			<li id="currentTab"><a href="/">Home</a></li>
+            <li><a title="Drag this link to your bookmarks bar, then you can share images everywhere."  href="javascript:void((function(){var%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('src','http://y44y.appspot.com/bookmarklet');document.body.appendChild(e)})())">Bookmarklet</a></li>
+			<li><a href="/mypic">My Images</a></li>
+			<li><a href="http://feeds.feedburner.com/dwimages">RSS</a> </li>
+			<li><a href="{{ version }}">{{ vername }}</a></li>
+			<li><a href="{{ sign_url }}">{{ sign }}</a></li>
+		</ul>
+		<div id="search">
+			<form action="/search" method="post" name="search">
+				<input type="text" title="Search Images" name="keywords" id="searchBox"/> 
+				<button type="submit" name="searchSubmit" rel="searchBox"><span>Search Images</span></button>
+			</form>
+		</div>
+	</div>
+
+	<div id="wrap">
+		<div id="main">
+			{% block main%}{% endblock %}
+		</div>
+
+		<div id="sidebar">
+			{% block sidebar%}
+				<div id="googleFriendConnect"></div>
+				<div id="googleFriendComment"></div>
+			{% endblock %}
+		</div>
+	</div>
+
+	<div id="footer">
+		<a href="http://www.kangye.org">kangye.org</a> | <a href="http://jianyi.kangye.org">suggestion</a>
+	</div>
+
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="http://www.google.com/friendconnect/script/friendconnect.js"></script>
+	<script type="text/javascript" src="/js/total.js"></script>
+  </body> 
+</html> 

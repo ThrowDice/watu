@@ -1,0 +1,86 @@
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<title>SimpleViewer</title>
+<!-- Download SimpleViewer at www.airtightinteractive.com/simpleviewer -->
+<script type="text/javascript" src="simpleviewer/swfobject.js"></script>
+<style type="text/css">	
+	/* hide from ie on mac \*/
+	html {
+		height: 100%;
+	}
+	
+	#flashcontent {
+		height: 100%;
+	}
+	/* end hide */
+
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #181818;
+		color:#ffffff;
+		font-family:sans-serif;
+		font-size:20;
+	}
+	
+	a {	
+		color:#cccccc;
+	}
+</style>
+</head>
+<body>
+	<a href="/">Home</a><br /><br />
+	<form action="/manage" method="post" enctype="multipart/form-data">
+		<label>File: </label><input name="file" type="file" size="50"><br />
+		<label>Caption: </label><input name="caption" type="input" size="50"><br />
+		<label>原始图片链接: </label><input name="olink" type="input" size="50"><br />
+		<label>原始网页链接: </label><input name="opagelink" type="input" size="50"><br />
+		<input type="submit">
+	</form>
+	{{ error }}
+	{% if img and not error %}
+	picture name = {{ img.name|escape }} | caption = {{ img.caption }} | <a href="images/{{ img.key }}{{ img.ext }}">View original<a/>
+	<br />
+	{% endif %}
+	<br />
+	<form action="/manage" method="post">
+	<table>{% for img in images %}
+		{% if forloop.first %}
+		<tr>
+			<th></th>
+			<th>Photo</th>
+			<th>Name | </th>
+			<th>Length | </th>
+			<th>Caption</th>
+		</tr>
+		{% endif %}
+		<tr>
+			<td><input type="checkbox" name="image" id="{{ img.key }}" value="{{ img.key }}"></td>
+			<td><a href="imgdetail/{{ img.key }}"><img src="thumbs/{{ img.key }}{{ img.ext_thumb }}" /><a/></td>
+			<td>{{ img.name }} | </td>
+			<td>{{ img.length  }} | </td>
+			<td>{{ img.caption }}</td>
+		</tr>
+		{% if forloop.last %}
+		<tr>
+			<td><input type="submit" name="action" value="Del"></td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</table>
+	</form>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-4155622-4");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+</body>
+</html>

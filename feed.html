@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>挖图网最新图片-分享网络上的图片并和你的朋友分享</title>
+    <link>http://images.kangye.org/</link>
+    <description>挖图网让你可以分享你在网络上看到的图片，只要使用挖图网的分享按钮，就可以随时随地分享你在网上看到的经常图片，并可以评论打分，和朋友分享。本网站使用了Google Friend Connect。</description>
+    <language>zh-cn</language>
+    <docs>http://images.kangye.org/rss</docs>
+    <generator>康爷</generator>
+    <webMaster>areyoulookon@gmail.com</webMaster>
+ {% for img in images %}
+    <item>
+      <title>{{img.caption}}</title>
+      <link>http://images.kangye.org/imgdetail/{{img.key}}</link>
+      <description>&lt;p&gt;&lt;a href=&quot;http://images.kangye.org/imgdetail/{{img.key}}&quot;&gt;&lt;img src=&quot;http://{% firstof img.server "y44y" %}.appspot.com/images/{{ img.key }}{{ img.ext_thumb }}&quot; alt=&quot;&quot; border=&quot;0&quot; width=&quot;408&quot; height=&quot;480&quot;&gt;&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>{{img.date}}</pubDate>
+      <guid>http://images.kangye.org/imgdetail/{{img.key}}</guid>
+    </item>
+{% endfor %}
+  </channel>
+</rss>

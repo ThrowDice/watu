@@ -1,0 +1,9 @@
+User-Agent: *
+Disallow: /savecap
+Disallow: /mypic
+Disallow: /u
+Disallow: /manage
+Allow: /
+Disallow: /test
+sitemap: http://images.kangye.org/sitemap.xml
+

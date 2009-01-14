@@ -1,0 +1,37 @@
+{% extends "cnbase.html" %}
+
+{% block main %}
+
+<h2 id="{{img.key}}">{{img.caption}}</h2>
+<div id="metainfo">
+<ul>
+	<li>{{date}}</li>
+	{% if By %}<li><span class="label">分享者: </span><span>{{By}}</span>{% endif %}
+	{% if img.category %}<li><span class="label">分类: </span><span>{{img.category}}</span>{% endif %}
+</ul>
+</div>
+
+<div id="mainPicture">
+	
+	<img src="http://{% firstof img.server "y44y" %}.appspot.com/images/{{ img.key }}{{ img.ext_thumb }}" alt="{{img.caption}}" title="{{img.caption}}" />
+	
+</div>
+
+<div id="detail">
+	<ul>
+		<li><span class="label">原始图片: </span><span><a href="{{img.olink}}" target="_blank" rel="nofollow">{{img.name}}{{img.ext}}</a></span></li>
+		<li><span class="label">网页链接：</span><span><a href="{{img.opagelink}}" target="_blank" rel="nofollow">{% if img.opagetitle %}{{ img.opagetitle }}{% else %}包含此图片的网页{% endif %}</a></li>
+		{% if img.country %}<li><span class="label">国家</span><span>{{img.country}}</span></li>{% endif %}
+	</ul>
+</div>
+
+<div id="randomPic">
+	<h3>更多图片</h3>
+	<ul>
+{% for img in random %}
+	<li><a href="/imgdetail/{{img.key}}"><img src="http://{% firstof img.server "y44y" %}.appspot.com/thumbs/{{ img.key }}{{ img.ext_thumb }}" title="{{img.caption}}" alt="img.caption" /></a></li>
+{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simpleviewergallery maxImageWidth="480" maxImageHeight="480" textColor="0xFFFFFF" frameColor="0xFFFFFF" frameWidth="20" stagePadding="40" navPadding="40" thumbnailColumns="3" thumbnailRows="3" navPosition="left" vAlign="center" hAlign="center" title="SimpleViewer Gallery" enableRightClickOpen="true" backgroundImagePath="">
+{% for img in images %}
+<image>
+	<filename>{{ img.key }}{{ img.ext }}</filename>
+	<caption><![CDATA[{{ img.caption }}]]></caption>	
+</image>{% endfor %}
+</simpleviewergallery>
