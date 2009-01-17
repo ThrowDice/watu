@@ -259,7 +259,8 @@ iframe = frames["ff__iframe"];
 iframe = byId("ff__iframe").contentWindow;
 }
 if (!iframe) return;
-var url = 'http://images.kangye.org';
+//var url = 'http://images.kangye.org';
+var url = 'http://y44y.appspot.com';
 url = url+'/submit' +"?"+ p;
 try {
 iframe.location.replace(url);

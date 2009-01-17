@@ -28,10 +28,8 @@ import urllib
 import friendfeed
 from sgmllib import SGMLParser
 import feedparser
-        
-import gdata.photos.service
-import gdata.alt.appengine
 
+from django.utils import simplejson as json
 from google.appengine.ext import search
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
@@ -77,39 +75,6 @@ class IMGLister(SGMLParser):
             src = [v for k, v in attrs if k=='src'] 
             if src:
                 self.urls.extend(src)
-
-
-def ImgCol(images):
-    imagescol=[]
-    imagescoll=[]    
-    for i in range(0,4):
-      for j in range(0,5):
-        if len(images)<i*5+j+1:
-            img=get_image('agR5NDR5cgwLEgVJbWFnZRiHAgw')
-            imagescol.append(img)
-        else:
-            imagescol.append(images[i*5+j])
-      imagescoll.append(imagescol)
-      imagescol=[] 
-    return imagescoll
-
-def GetContry(handler):
-    ip = str(handler.request.remote_addr)
-    url = "http://geoip.wtanaka.com/cc/"+ip
-    result = urlfetch.fetch(url)
-    return result.content
-
-def publishfanfou(status):
-    status = status.encode('utf-8','ignore')
-    url = "http://api.fanfou.com/statuses/update.json"
-    pair = "%s:%s" % ('kangk4@gmail.com','1988315')
-    token = base64.b64encode(pair)
-    au="Basic %s" % token
-    form_data = urllib.urlencode({'status':status})
-    result=urlfetch.fetch(url=url,payload=form_data,\
-                                          method=urlfetch.POST,\
-                                          headers={'Authorization':au})
-    
 
     
 
@@ -221,6 +186,17 @@ class RSS(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'feed.html')
         self.response.out.write(template.render(path,template_values))
     post = get
+    
+class XiaoNei(webapp.RequestHandler):
+    def get(self):
+        query = db.Query(Image)
+        query = Image.all()
+        query.order('-date')
+        images = query.fetch(12)
+        template_values = {'images': images}        
+        path = os.path.join(os.path.dirname(__file__), 'xiaonei1.xml')
+        self.response.out.write(template.render(path,template_values))
+        
 
         
         
@@ -939,7 +915,10 @@ class TestApp(webapp.RequestHandler):
 #            img.put()
         #img = Image.get("agR5NDR5cgwLEgVJbWFnZRjUFgw")
         #img.delete()
-        self.response.out.write("good")
+        q = Image.all()
+        q.order("-date")
+        images = q.fetch(12)
+        self.response.out.write(makejson(images))
         #add_3p_to_server()
         #self.response.out.write("OK")
         #add_3p_to_server() 
@@ -1131,13 +1110,58 @@ def add_3p_to_server():
                 request_to_server(rannum,url,strkey)
                 logging.info('Add_Pic : %s %s %s' % (url,link,title))
 
+def ImgCol(images):
+    imagescol=[]
+    imagescoll=[]    
+    for i in range(0,4):
+      for j in range(0,5):
+        if len(images)<i*5+j+1:
+            img=get_image('agR5NDR5cgwLEgVJbWFnZRiHAgw')
+            imagescol.append(img)
+        else:
+            imagescol.append(images[i*5+j])
+      imagescoll.append(imagescol)
+      imagescol=[] 
+    return imagescoll
 
+def GetContry(handler):
+    ip = str(handler.request.remote_addr)
+    url = "http://geoip.wtanaka.com/cc/"+ip
+    result = urlfetch.fetch(url)
+    return result.content
+
+def publishfanfou(status):
+    status = status.encode('utf-8','ignore')
+    url = "http://api.fanfou.com/statuses/update.json"
+    pair = "%s:%s" % ('kangk4@gmail.com','1988315')
+    token = base64.b64encode(pair)
+    au="Basic %s" % token
+    form_data = urllib.urlencode({'status':status})
+    result=urlfetch.fetch(url=url,payload=form_data,\
+                                          method=urlfetch.POST,\
+                                          headers={'Authorization':au})
+
+def makejson(images):
+    retrn = []
+    for img in images:
+        url=""
+        if not img.server:
+            url="http://y44y.appspot.com/thumbs/%s%s" % (img.key(),img.ext_thumb)
+        else:
+            url="http://%s.appspot.com/thumbs/%s%s" % (img.server,img.key(),img.ext_thumb)
+        #logging.debug(url)
+        di={"key":str(img.key()),"url":url,"title":img.caption}
+        logging.debug(di)
+        retrn.append(di)
+    return json.dumps(retrn)
+        
     
     
     
 
 def main():
     application = webapp.WSGIApplication([('/', Home),
+                                          ('/app/xiaonei',XiaoNei),
                                           ('/admin', Admin),
                                           ('/imgdetail/(.*)',Detail),
                                           ('/(images|thumbs)/(.*)\..*',GetImage),

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+ <ModulePrefs title="List Friends Example">
+
+ <Require feature="opensocial-0.8"/>
+ </ModulePrefs>
+ <Content type="html">
+ <![CDATA[
+   <script type="text/javascript">
+       
+        function getData() {
+          var req = opensocial.newDataRequest();
+          req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.VIEWER), 'viewer');
+          req.send(onLoadMyInfo);
+        };
+        function onLoadMyInfo(dataResponse) {
+           var viewer = dataResponse.get('viewer').getData();
+           var html ='ID：'+viewer.getId()+'</br>'; 
+           html+='我的名字 ' + viewer.getDisplayName()+'</br>';
+           html+='<img src="' + viewer.getField(opensocial.Person.Field.THUMBNAIL_URL) + '"/>'+'</br>';
+           document.getElementById('message').innerHTML = html;
+           gadgets.window.adjustHeight();
+        };
+        gadgets.util.registerOnLoadHandler(getData);
+       </script>
+       
+       <div id="message"></div>
+   
+
+ ]]>
+ </Content>
+</Module>
+
+

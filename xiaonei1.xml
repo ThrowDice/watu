@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="List Friends Example">
+    <Require feature="opensocial-0.8"/>
+  </ModulePrefs>
+  <Content type="html">
+  <![CDATA[
+    <style>
+       @import url(http://y44y.appspot.com/static/style/core.css);
+     </style>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <script type="text/javascript">
+    var name = "";
+    var id   = "";
+    var images;
+    /**
+       * Request the OWNER and OWNER's friends.
+       */
+      function request() {
+        //alert("google");
+        var req = opensocial.newDataRequest();
+        req.add(req.newFetchPersonRequest("VIEWER"), "get_viewer");
+        req.send(response);
+      };
+
+      /**
+       * Parses the response and generates html to list the names of the owner and
+       * his or her friends.
+       *
+       * @param {Object} dataResponse Friend information that was requested.
+       */
+      function response(dataResponse) {
+        var viewer = dataResponse.get('get_viewer').getData();
+        name = viewer.getDisplayName();  
+        id   = viewer.getId(); 
+        //showImages(); 
+        
+      };
+    
+    function showImages(){
+        var params = {};
+        params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+        var url = "http://y44y.appspot.com/test";
+        gadgets.io.makeRequest(url, jsonhandle, params);        
+    };
+    
+    function jsonhandle(obj){
+        images = obj.data;
+        alert(images[0].url);
+    };
+
+      // Execute the request function when the application is finished loading.
+      gadgets.util.registerOnLoadHandler(request);
+    
+    $(document).ready(function(){
+        var cssObj = {
+                    'text-align':'center';
+                	'display':'block';
+                	'float':'left';
+                	'width':'140px';
+                	'height':'140px';
+                	'margin':'1px';
+                	'padding':'5px';
+                	'border':'1px solid #FFF';        
+              }
+        
+                $("#imageList > li").css(cssObj); 
+                 
+        
+    	
+    });
+    
+
+    function g(el){
+    //alert(name);
+    //alert(el.src);
+    var params = {};  
+    params[opensocial.Activity.Field.TITLE] = "<a href='http://xiaonei.com/profile.do?id="+id+"'>"+name + "</a> 分享了一张关于"+el.title+"的图片。";
+    params[opensocial.Activity.Field.BODY]  = "<a href='http://images.kangye.org/imgdetail/"+el.id+"'>"+"<img src='"+el.src+"'/></a>"; 
+    var activity = opensocial.newActivity(params); 
+    opensocial.requestCreateActivity(activity, opensocial.CreateActivityPriority.HIGH, callback);
+       
+    
+    };
+    
+    function callback(){
+    alert("成功!"); 
+    }
+    </script>
+    <div id="head">
+    <a href="http://images.kangye.org">挖图网首页</a>
+    </div>
+    <div id="content">
+    <ul id="imageList" style="margin:0px 0px 5px 10px;padding-top:5px;">
+    {% for img in images %}
+    	<li>
+    	
+    	<img id="{{img.key}}" onclick="javascript:g(this);return false" src="http://{%firstof img.server "y44y" %}.appspot.com/thumbs/{{ img.key }}{{ img.ext_thumb }}" title="{{img.caption}}" alt="img.caption" />
+    	
+    	</li>
+    {% endfor %}
+    </ul>
+    </div>
+  ]]>
+  </Content>
+</Module>
